@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Mohamed Sohiel Sayed, computer engineer in Cairo: embedded systems, Linux and software projects.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mohamed Sohiel Sayed">
+<meta property="og:description" content="Mohamed Sohiel Sayed, computer engineer in Cairo: embedded systems, Linux and software projects.">
+<meta name="theme-color" content="#0b2545">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%230b2545'/%3E%3Ctext x='8' y='44' font-family='monospace' font-weight='bold' font-size='34' fill='%235fd38a'%3E$%3C/text%3E%3Crect x='34' y='38' width='20' height='6' fill='%23ffb703'/%3E%3C/svg%3E">
+<title>Mohamed Sohiel Sayed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;800&display=swap">
+<style>
+/* Layout: blueprint sheet on a faint grid; terminal prompts head each section; hero carries a drawing title block. Single deliberate dark look. */
+:root{
+  --ink:#0b2545;        /* sheet background */
+  --ink-2:#0f2e55;      /* raised surface */
+  --grid:rgba(160,195,240,.07);
+  --paper:#eef4ff;      /* main text */
+  --muted:#9fb7d9;      /* secondary text */
+  --line:#6f98cc;       /* drawing lines */
+  --amber:#ffb703;      /* annotation accent */
+  --prompt:#5fd38a;     /* terminal prompt glyph only */
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background-color:var(--ink);color:var(--paper);font:16px/1.6 var(--sans);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(11,37,69,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(111,152,204,.35)}
+nav .wrap{display:flex;align-items:center;gap:6px 18px;flex-wrap:wrap;padding-block:10px;font:500 13px var(--mono)}
+nav .home{color:var(--paper);text-decoration:none;margin-right:auto}
+nav .home b{color:var(--prompt);font-weight:600}
+nav a.l{color:var(--muted);text-decoration:none}
+nav a.l:hover{color:var(--amber)}
+
+/* hero */
+header.hero{padding-block:64px 40px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:end}
+.prompt{font:500 14px var(--mono);color:var(--muted)}
+.prompt b{color:var(--prompt);font-weight:600}
+.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--amber);vertical-align:-2px;margin-left:4px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h1{font:800 clamp(34px,6vw,60px)/1.05 var(--mono);letter-spacing:-1.5px;margin:14px 0 12px;text-wrap:balance}
+.role{font-size:19px;color:var(--muted);max-width:34em;margin:0}
+.role strong{color:var(--paper);font-weight:500}
+.titleblock{border:1.5px solid var(--line);font:12px/1.3 var(--mono);background:rgba(11,37,69,.6)}
+.titleblock div{display:grid;grid-template-columns:96px 1fr;border-top:1px solid rgba(111,152,204,.5)}
+.titleblock div:first-child{border-top:0}
+.titleblock span{padding:7px 9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-right:1px solid rgba(111,152,204,.5);font-size:10.5px}
+.titleblock em{padding:7px 9px;font-style:normal;color:var(--paper)}
+.titleblock .rev em{color:var(--amber)}
+
+/* sections */
+section{padding-block:44px;border-top:1px dashed rgba(111,152,204,.35)}
+.sec-head{font:600 15px var(--mono);color:var(--muted);margin:0 0 22px}
+.sec-head b{color:var(--prompt)}
+.sec-head .t{color:var(--paper)}
+.about p{max-width:66ch;margin:0 0 14px;font-size:17px}
+.about p:first-of-type{font-size:19px;color:var(--paper)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font:500 12.5px var(--mono);border:1px solid var(--line);color:var(--paper);padding:4px 10px;border-radius:2px}
+.chip.hl{border-color:var(--amber);color:var(--amber)}
+
+/* experience timeline */
+.log{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.log li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding-block:16px;border-bottom:1px solid rgba(111,152,204,.2)}
+.log .when{font:600 13px var(--mono);color:var(--amber);padding-top:3px;font-variant-numeric:tabular-nums}
+.log h3{margin:0;font:600 17px var(--sans)}
+.log .org{color:var(--muted);font-size:14.5px}
+.log p{margin:6px 0 0;max-width:70ch;color:var(--paper);opacity:.92;font-size:15px}
+.subgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;margin-top:28px}
+.box{border:1px solid rgba(111,152,204,.5);padding:16px 18px;background:rgba(15,46,85,.55)}
+.box h4{margin:0 0 8px;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.box ul{margin:0;padding-left:18px}
+.box li{margin:4px 0;font-size:15px}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px 28px}
+.skills h3{font:600 13px var(--mono);margin:0 0 8px;color:var(--paper)}
+.skills h3::before{content:"./";color:var(--prompt)}
+.skills p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.7}
+.skills .core{grid-column:1/-1;border:1px dashed var(--amber);padding:14px 16px}
+.skills .core p{color:var(--paper)}
+
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.filters button{font:500 13px var(--mono);background:transparent;color:var(--muted);border:1px solid rgba(111,152,204,.6);padding:5px 12px;cursor:pointer;border-radius:2px}
+.filters button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.filters button:hover{color:var(--paper)}
+.filters button[aria-pressed="true"]:hover{color:var(--ink)}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:20px}
+.proj{border:1px dashed var(--line);background:rgba(15,46,85,.6);display:flex;flex-direction:column;min-width:0}
+.proj .img{aspect-ratio:16/9;max-width:100%;border-bottom:1px dashed var(--line);background:var(--ink);overflow:hidden}
+.proj .img img{display:block;width:100%;height:100%;object-fit:contain}
+.proj .img.sym{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:20px;text-align:center;
+  background:repeating-linear-gradient(45deg,transparent 0 10px,rgba(111,152,204,.07) 10px 11px),var(--ink)}
+.proj .img.sym b{font:800 clamp(18px,3vw,26px)/1.2 var(--mono);color:var(--paper);letter-spacing:.02em;border:1.5px solid var(--line);padding:10px 16px}
+.proj .img.sym span{font:500 12px var(--mono);color:var(--amber);letter-spacing:.06em;text-transform:uppercase}
+.proj .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.proj .kind{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.proj h3{margin:0;font:600 19px/1.3 var(--sans);text-wrap:balance}
+.proj .pitch{margin:0;color:var(--muted);font-size:15px}
+.proj details summary{cursor:pointer;font:500 13px var(--mono);color:var(--paper);list-style:none}
+.proj details summary::-webkit-details-marker{display:none}
+.proj details summary::before{content:"+ ";color:var(--prompt)}
+.proj details[open] summary::before{content:"− "}
+.proj details ul{margin:10px 0 0;padding-left:18px}
+.proj details li{font-size:14.5px;margin:6px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tags span{font:500 11.5px var(--mono);color:var(--paper);background:rgba(111,152,204,.16);padding:3px 8px;border-radius:2px}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px;font:500 12.5px var(--mono);border-top:1px solid rgba(111,152,204,.25);padding-top:10px}
+.links a,.hero-links a{color:var(--amber);text-decoration:none}
+.links a:hover,.hero-links a:hover{text-decoration:underline}
+.hero-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font:500 14px var(--mono)}
+.hero-links a::before{content:"→ ";color:var(--prompt)}
+.proj[hidden]{display:none!important}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.contact div{border:1px solid rgba(111,152,204,.5);padding:12px 14px;font:13px var(--mono);min-width:0;background:rgba(15,46,85,.55)}
+.contact span{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.contact a{color:var(--paper);text-decoration:none;overflow-wrap:anywhere}
+.contact a:hover{color:var(--amber)}
+.contact .mail{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.contact .mail code{font:inherit;color:var(--paper);user-select:all;overflow-wrap:anywhere}
+.contact button{font:500 11px var(--mono);background:transparent;color:var(--amber);border:1px solid var(--amber);padding:2px 8px;cursor:pointer;border-radius:2px}
+.contact button:hover{background:var(--amber);color:var(--ink)}
+.contact-note{margin:16px 0 0;color:var(--muted);font-size:15px;max-width:60ch}
+footer{padding-block:28px 40px;font:12px var(--mono);color:var(--muted);border-top:1px dashed rgba(111,152,204,.35)}
+
+@media (max-width:760px){
+  .hero-grid{grid-template-columns:1fr}
+  .log li{grid-template-columns:1fr;gap:4px}
+  header.hero{padding-block:40px 28px}
+}
+@media (prefers-reduced-motion:reduce){.cursor{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<nav aria-label="Sections"><div class="wrap">
+  <a class="home" href="#top"><b>~</b>/sohiel</a>
+  <a class="l" href="#about">about</a><a class="l" href="#experience">experience</a><a class="l" href="#skills">skills</a><a class="l" href="#projects">projects</a><a class="l" href="#contact">contact</a>
+</div></nav>
+
+<main id="top" class="wrap">
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="prompt"><b>$</b> whoami<span class="cursor" aria-hidden="true"></span></div>
+      <h1>Mohamed Sohiel Sayed</h1>
+      <p class="role">Computer engineer. <strong>Embedded systems, Linux and software</strong>, from microcontroller firmware to mobile apps.</p>
+      <div class="hero-links"><a href="https://github.com/Mohamed-Sohiel-Sayed" target="_blank" rel="noopener">github</a><a href="https://www.linkedin.com/in/mohamed-sohiel/" target="_blank" rel="noopener">linkedin</a><a href="#contact">email</a></div>
+    </div>
+    <div class="titleblock" aria-label="Summary">
+      <div><span>Discipline</span><em>Computer Eng. (CESS)</em></div>
+      <div><span>School</span><em>Ain Shams Univ. / UEL</em></div>
+      <div><span>Location</span><em>Cairo, Egypt</em></div>
+      <div><span>Core</span><em>Embedded · Linux · C++ · Java</em></div>
+      <div class="rev"><span>Status</span><em>Open to work</em></div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="about">
+  <h2 class="sec-head"><b>$</b> cat <span class="t">about.txt</span></h2>
+  <p>Computer engineer based in Cairo, Egypt, with a B.Eng. in Computer Engineering and Software Systems from Ain Shams University (dual degree with the University of East London, 2025).</p>
+  <p>I work across the stack, from microcontroller firmware to Linux systems and applications. My strongest areas are embedded systems, Linux, C++ and Java. I have built bare-metal and FreeRTOS firmware with my own register-level drivers on ARM Cortex-M and AVR, custom embedded Linux images with Buildroot and Yocto, a Flutter and Firebase mobile app, and monitoring and DevOps setups with Docker, Ansible and AWS.</p>
+  <p>My graduation project, sponsored by Siemens DISW, applied automotive safety standards to an automated-driving stack in a digital-twin simulation and was published at the System-on-Chip Conference (SOCC), Dubai, 2025.</p>
+  <p>Open to freelance and full-time work in embedded software, embedded Linux, mobile, desktop and web development, and engineering or academic projects.</p>
+  <div class="facts">
+    <span class="chip hl">SOCC 2025 publication</span><span class="chip">Siemens DISW sponsored</span><span class="chip">CCNA CyberOps</span><span class="chip">FreeRTOS</span><span class="chip">Yocto / Buildroot</span><span class="chip">Flutter + Firebase</span>
+  </div>
+</section>
+
+<section id="experience">
+  <h2 class="sec-head"><b>$</b> cat <span class="t">experience.log</span></h2>
+  <ol class="log">
+    <li><div class="when">2026 – now</div><div><h3>DevOps Trainee</h3><div class="org">Digital Egypt Pioneers Initiative (DEPI), Egypt</div><p>DevOps fundamentals, configuration management with Ansible, Git for DevOps, Docker (including advanced concepts) and Linux administration (users, storage), plus freelancing skills: portfolio building, proposals and client communication.</p></div></li>
+    <li><div class="when">2024</div><div><h3>Data Communication Engineering Intern</h3><div class="org">Huawei, Cairo</div><p>Configured networks with OSPF, VLANs, Spanning Tree, IPv4/IPv6 addressing, NAT and ACLs; simulated network topologies in eNSP and analysed traffic with Wireshark.</p></div></li>
+    <li><div class="when">2024</div><div><h3>Embedded Linux Trainee</h3><div class="org">Edges for Training, Cairo</div><p>Built Linux images for the Raspberry Pi Zero W with Buildroot and Yocto, designed TCP/UDP abstraction modules in C++, and automated builds with CMake.</p></div></li>
+    <li><div class="when">2023</div><div><h3>Embedded Systems Trainee</h3><div class="org">Edges for Training, Cairo</div><p>AVR microcontroller projects with a layered architecture (MCAL / HAL / Application) and low-level drivers in embedded C/C++ (ADC, timers, UART, SPI and more).</p></div></li>
+    <li><div class="when">2022</div><div><h3>AI/ML Summer Program Trainee</h3><div class="org">Sprints, Cairo</div><p>Trained a natural-scene image classifier (6 classes) using transfer learning with Inception-ResNet-V2, VGG-16 and ResNet-50, data augmentation and hyper-parameter tuning.</p></div></li>
+  </ol>
+  <div class="subgrid">
+    <div class="box"><h4>Education</h4><ul><li>B.Eng., Computer Engineering and Software Systems (CESS), Ain Shams University, Cairo. Dual certificate program with the University of East London. Graduated 2025.</li></ul></div>
+    <div class="box"><h4>Certifications</h4><ul><li>Cisco CCNA CyberOps Associate, NTI, Cairo (2024)</li><li>Generative Artificial Intelligence, Sprints (2023)</li><li>AI &amp; ML Summer Program, Sprints (2022)</li></ul></div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="sec-head"><b>$</b> ls <span class="t">skills/</span></h2>
+  <div class="skills">
+    <div class="core"><h3>core</h3><p>Embedded systems · Linux · C++ · Java</p></div>
+    <div><h3>embedded</h3><p>Embedded C and C++, ARM Cortex-M4 (TI Tiva C / TM4C123GH6PM), AVR (ATmega32), FreeRTOS, bare-metal firmware, register-level drivers (GPIO, UART, timers and input capture, ADC, interrupts), SPI, I2C, CAN, layered MCAL/HAL architecture, sensor and motor interfacing, Code Composer Studio, Proteus</p></div>
+    <div><h3>embedded-linux</h3><p>Linux, Buildroot, Yocto, Raspberry Pi, device drivers and kernel modules, Makefiles, CMake, Bash, C++ networking (TCP/UDP)</p></div>
+    <div><h3>languages</h3><p>C, C++, Java, Python, Dart, Bash, Verilog, VHDL</p></div>
+    <div><h3>mobile</h3><p>Flutter, Dart, Firebase Authentication, Cloud Firestore, SQLite</p></div>
+    <div><h3>devops-cloud</h3><p>Docker, Ansible, Git and GitHub, AWS (EC2), Prometheus, Alertmanager, Linux administration</p></div>
+    <div><h3>verification</h3><p>Test automation, test-bench generation, Mentor QuestaSim, code coverage, waveform analysis, functional safety (ISO 26262, ISO 21448 / SOTIF), runtime monitoring, digital-twin simulation (CARLA, Autoware)</p></div>
+    <div><h3>networking-security</h3><p>OSPF, VLANs, STP, IPv4/IPv6, NAT, ACLs, eNSP, Wireshark, CCNA CyberOps</p></div>
+    <div><h3>ai-ml</h3><p>CNN image classification, transfer learning, autoencoders, Tkinter GUIs</p></div>
+    <div><h3>tools</h3><p>Jira, Notion, Microsoft Project</p></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="sec-head"><b>$</b> ls <span class="t">projects/</span></h2>
+  <div class="filters" role="group" aria-label="Filter projects">
+    <button id="f-all" data-f="all" aria-pressed="true">all</button>
+    <button id="f-embedded" data-f="embedded" aria-pressed="false">embedded</button>
+    <button id="f-mobile" data-f="mobile" aria-pressed="false">mobile</button>
+    <button id="f-verification" data-f="verification" aria-pressed="false">verification</button>
+    <button id="f-devops" data-f="devops" aria-pressed="false">devops</button>
+    <button id="f-ai" data-f="ai" aria-pressed="false">ai-ml</button>
+  </div>
+  <div class="projects">
+
+    <article class="proj" data-cat="verification">
+      <div class="img sym" aria-hidden="true"><b>ADAS · DIGITAL TWIN</b><span>ISO 26262 / SOTIF · runtime monitoring</span></div>
+      <div class="body">
+        <div class="kind">Graduation project · Siemens DISW</div>
+        <h3>Safety Analysis of Automated Driving Platforms Using Digital Twin Simulation and Run-time Monitoring</h3>
+        <p class="pitch">Testing an automated-driving stack against automotive safety standards inside a 3D digital twin.</p>
+        <details><summary>details</summary><ul>
+          <li>Tested the Autoware ADAS stack in a CARLA 3D digital-twin simulation, connected through the Siemens Innexis Interconnection Framework.</li>
+          <li>Applied ISO 26262 (functional safety) and ISO 21448 (SOTIF) to safety verification, with the DejaVu runtime monitor.</li>
+          <li>Results published at the System-on-Chip Conference (SOCC), Dubai, 2025.</li></ul></details>
+        <div class="tags"><span>Autoware</span><span>CARLA</span><span>Siemens Innexis</span><span>ISO 26262</span><span>SOTIF</span><span>runtime monitoring</span><span>digital twin</span><span>ADAS</span></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="embedded">
+      <div class="img"><img src="img/power-window.jpg" alt="Bench prototype: Tiva C LaunchPad, L298N motor driver, geared DC motor, push buttons and limit switches" loading="lazy"></div>
+      <div class="body">
+        <div class="kind">Team project · Real-time embedded</div>
+        <h3>Power Window Control System with Safety Features</h3>
+        <p class="pitch">A car power-window controller on an ARM Cortex-M4 running FreeRTOS, with one-touch operation, a window lock and jam protection.</p>
+        <details><summary>details</summary><ul>
+          <li>Controls the front passenger window from both the driver's and the passenger's panels: manual up/down while the button is held, and one-touch full open/close on a short press (under 1 second).</li>
+          <li>Jam protection: during a one-touch close, a detected obstacle stops the window and reverses it for 0.5 seconds. Top and bottom limit switches end every movement, and a lock switch disables the passenger panel.</li>
+          <li>FreeRTOS design: button, control and motor tasks for each panel, linked by binary semaphores and message queues, with timing based on the RTOS tick.</li>
+          <li>Register-level GPIO and UART drivers written from scratch (no vendor library); DC motor driven through an L298N H-bridge; UART and RGB LED status output for debugging.</li></ul></details>
+        <div class="tags"><span>C</span><span>FreeRTOS</span><span>TI Tiva C</span><span>ARM Cortex-M4</span><span>GPIO</span><span>UART</span><span>L298N</span><span>state machine</span></div>
+        <div class="links"><a href="https://drive.google.com/drive/folders/1rOKcKf3EH8qynmVJ_Xl5R4UxhcmHlm3T?usp=sharing" target="_blank" rel="noopener">code + demo video ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="embedded">
+      <div class="img"><img src="img/lifi.jpg" alt="Labelled Li-Fi prototype: Tiva C with sensors and Bluetooth module, LED and light receiver, ATmega32 board with LCD" loading="lazy"></div>
+      <div class="body">
+        <div class="kind">Team project · Embedded / IoT</div>
+        <h3>Li-Fi Home Security System</h3>
+        <p class="pitch">A home hazard monitor whose two microcontrollers talk through light instead of a wire.</p>
+        <details><summary>details</summary><ul>
+          <li>A Tiva C (ARM Cortex-M4) reads a smoke sensor, a magnetic door sensor and an ultrasonic distance sensor.</li>
+          <li>Readings are sent over a Li-Fi link: the UART signal drives an LED, and a light receiver feeds an ATmega32 (AVR) board, which raises an LED and buzzer alarm and shows the event (smoke, intrusion, movement) on an LCD.</li>
+          <li>The same data goes to a phone over Bluetooth (HC-05) and appears in a serial terminal app as alerts and distance readings.</li>
+          <li>Interrupt-driven on/off and mute buttons; the mute command is sent over the light link to silence the receiver's alarm.</li>
+          <li>Bare-metal C on both boards with a layered MCAL/HAL design; the ultrasonic echo is measured with hardware timer input capture. Short-range prototype link at 9600 baud.</li></ul></details>
+        <div class="tags"><span>C</span><span>TI Tiva C</span><span>ATmega32</span><span>UART</span><span>Li-Fi</span><span>Bluetooth HC-05</span><span>input capture</span><span>interrupts</span></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="mobile">
+      <div class="img"><img src="img/hedieaty.jpg" alt="Hedieaty app screens: Home, Event List and Gift Details" loading="lazy"></div>
+      <div class="body">
+        <div class="kind">Solo project · Mobile</div>
+        <h3>Hedieaty: Event and Gift List App</h3>
+        <p class="pitch">A Flutter app for wish lists: create events, list gifts, connect with friends and let them pledge gifts.</p>
+        <details><summary>details</summary><ul>
+          <li>Users create events (sortable by name, date or status: upcoming, current, past) and gift lists for each event; friends can view published lists and pledge gifts.</li>
+          <li>Hybrid storage: private draft gifts are stored on the device in SQLite and moved to Cloud Firestore when published; both sources appear in one live list.</li>
+          <li>Pledging runs as a Firestore transaction, so a gift can't be pledged twice, and you can only pledge your friends' gifts, never your own. Pledged gifts are locked from editing and show who pledged them.</li>
+          <li>Firebase Authentication (email/password). Friends are added by phone number or from the phone's contacts, and can be found with search.</li>
+          <li>Layered code (models, controllers, services, views), animated page transitions, light and dark themes, input validation.</li></ul></details>
+        <div class="tags"><span>Flutter</span><span>Dart</span><span>Firebase Auth</span><span>Cloud Firestore</span><span>SQLite</span><span>rxdart</span><span>Android</span></div>
+        <div class="links"><a href="https://github.com/Mohamed-Sohiel-Sayed/Hedieaty" target="_blank" rel="noopener">github ↗</a><a href="https://www.youtube.com/playlist?list=PLczLv5GGcLmIBa9PQLLrLSDzxuprzXGmY" target="_blank" rel="noopener">demo videos ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="devops">
+      <div class="img sym" aria-hidden="true"><b>PROMETHEUS → ALERTMANAGER</b><span>monitoring and alerting on AWS EC2</span></div>
+      <div class="body">
+        <div class="kind">Project · DevOps / Monitoring</div>
+        <h3>Network Management System for Cloud Applications</h3>
+        <p class="pitch">Real-time monitoring and alerting for cloud applications.</p>
+        <details><summary>details</summary><ul>
+          <li>Deployed a monitoring stack with Prometheus and Alertmanager on AWS EC2.</li>
+          <li>Wrote alerting rules with tuned thresholds (for example latency and memory usage) and routing, and built dashboards.</li></ul></details>
+        <div class="tags"><span>Prometheus</span><span>Alertmanager</span><span>AWS EC2</span><span>monitoring</span><span>Linux</span></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="verification">
+      <div class="img sym" aria-hidden="true"><b>VERILOG → TESTBENCH</b><span>python · questasim · coverage</span></div>
+      <div class="body">
+        <div class="kind">Project · Hardware verification</div>
+        <h3>Automatic Test Bench Generator</h3>
+        <p class="pitch">A Python tool that generates Verilog test benches automatically.</p>
+        <details><summary>details</summary><ul>
+          <li>Python workflow with a Verilog parser that generates test benches for systematic design verification.</li>
+          <li>Ran simulations in Mentor QuestaSim and analysed waveforms and coverage.</li></ul></details>
+        <div class="tags"><span>Python</span><span>Verilog</span><span>QuestaSim</span><span>test automation</span><span>code coverage</span></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="embedded">
+      <div class="img sym" aria-hidden="true"><b>KEYPAD · LCD · EEPROM</b><span>password-protected door lock</span></div>
+      <div class="body">
+        <div class="kind">Project · Embedded</div>
+        <h3>Door Locker System</h3>
+        <p class="pitch">Password-protected door lock with a keypad, LCD and motor.</p>
+        <details><summary>details</summary><ul>
+          <li>Modular control architecture with UART communication.</li>
+          <li>4x4 keypad, 16x2 LCD, buzzer, DC motor and EEPROM for user authentication and feedback.</li></ul></details>
+        <div class="tags"><span>Embedded C</span><span>UART</span><span>keypad</span><span>LCD</span><span>EEPROM</span><span>DC motor</span></div>
+      </div>
+    </article>
+
+    <article class="proj" data-cat="ai">
+      <div class="img sym" aria-hidden="true"><b>GRAY → COLOR</b><span>convolutional autoencoder · LAB</span></div>
+      <div class="body">
+        <div class="kind">Project · AI/ML · Desktop</div>
+        <h3>Image Colorization</h3>
+        <p class="pitch">A deep-learning tool that colorizes grayscale photos.</p>
+        <details><summary>details</summary><ul>
+          <li>Convolutional autoencoder (LAB color space) trained on landscape images to colorize grayscale photos.</li>
+          <li>Tkinter desktop GUI for live inference; packaged in a container and served as an endpoint.</li></ul></details>
+        <div class="tags"><span>Python</span><span>deep learning</span><span>autoencoder</span><span>Tkinter</span><span>Docker</span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="sec-head"><b>$</b> ping <span class="t">sohiel</span></h2>
+  <div class="contact">
+    <div><span>Email</span><div class="mail"><code id="email">mohamedsohiel357@gmail.com</code><button id="copy-email" type="button" data-copy="email">copy</button></div></div>
+    <div><span>Phone / WhatsApp</span><div class="mail"><code id="phone">+20 109 818 4551</code><button id="copy-phone" type="button" data-copy="phone">copy</button></div></div>
+    <div><span>LinkedIn</span><a href="https://www.linkedin.com/in/mohamed-sohiel/" target="_blank" rel="noopener">linkedin.com/in/mohamed-sohiel</a></div>
+    <div><span>GitHub</span><a href="https://github.com/Mohamed-Sohiel-Sayed" target="_blank" rel="noopener">github.com/Mohamed-Sohiel-Sayed</a></div>
+    <div><span>Location</span>Cairo, Egypt</div>
+  </div>
+  <p class="contact-note">Open to freelance and full-time work. Send me a message about your project or role.</p>
+</section>
+</main>
+
+<footer><div class="wrap">© 2026 Mohamed Sohiel Sayed</div></footer>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('.filters button'), cards=document.querySelectorAll('.proj');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    var f=b.getAttribute('data-f');
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    cards.forEach(function(c){c.hidden=!(f==='all'||c.getAttribute('data-cat')===f)});
+  })});
+  document.querySelectorAll('[data-copy]').forEach(function(cb){var em=document.getElementById(cb.getAttribute('data-copy'));
+  if(cb&&em){cb.addEventListener('click',function(){
+    var t=em.textContent.replace(/ /g,''), done=function(){cb.textContent='copied';setTimeout(function(){cb.textContent='copy'},1600)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(em);var s=getSelection();s.removeAllRanges();s.addRange(r);cb.textContent='selected';setTimeout(function(){cb.textContent='copy'},1600)};
+    try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
+  })}})
+})();
+</script>
+
+</body>
+</html>
